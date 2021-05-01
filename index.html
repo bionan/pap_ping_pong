@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #jogo {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="jogo" width="600" height="480"></canvas>
+    <script>
+        var jogo = document.getElementById("jogo");
+        var canvas = jogo.getContext("2d");
+
+        // criar o objeto raquete1 incialmente na posição x = 50
+        // y = 50 e velocidade 10px
+        var raquete1 = {x:50, y:50, vel:10};
+
+        // criar o objeto raquete2 incialmente na posição x = 150
+        // y = 150 e velocidade 10px 
+        // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
+        var raquete2 = {x:150, y:150, vel:10};
+
+        // Criar as variáveis tecla_dir, tecla_esq, tecla_cima, tecla_baixo
+        // inicialmente todas com valores false
+        var tecla_dir = false;
+        var tecla_esq = false;
+        var tecla_cima = false;
+        var tecla_baixo = false;
+
+        // Criar as variáveis tecla_d, tecla_a, tecla_w, tecla_s
+        // inicialmente todas com valores false
+        //
+        // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
+        var tecla_d = false;
+        var tecla_a = false;
+        var tecla_w = false;
+        var tecla_s = false;
+
+        document.addEventListener('keydown', teclaPressionada);
+
+        function teclaPressionada(e) {
+            console.log(e.code);
+            switch( e.code ) {
+
+                // Verificar se a tecla ArrowRight foi pressionada
+                // Se sim, atribuir o valor true a variável tecla_dir
+                case 'ArrowRight':
+                    tecla_dir = true;
+                    break;
+
+                // Verificar se a tecla D (qual será o código da tecla D?) foi pressionada
+                // Se sim, atribuir o valor true a variável tecla_d                    
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
+                case 'KeyD' :
+                    tecla_d = true;
+                    break;
+
+                // Verificar se a tecla ArrowLeft foi pressionada
+                // Se sim, atribuir o valor true a variável tecla_esq
+                case 'ArrowLeft':
+                    tecla_esq = true;
+                    break;
+
+                // Verificar se a tecla A (qual será o código da tecla A?) foi pressionada
+                // Se sim, atribuir o valor true a variável tecla_a
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
+                case 'KeyA' :
+                    tecla_a = true;
+                    break;
+
+                // Verificar se a tecla ArrowUp foi pressionada
+                // Se sim, atribuir o valor true a variável tecla_cima               
+                case 'ArrowUp':
+                    tecla_cima = true;
+                    break;
+
+                // Verificar se a tecla W (qual será o código da tecla W?) foi pressionada
+                // Se sim, atribuir o valor true a variável tecla_w
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES  
+                case 'KeyW' : 
+                    tecla_w = true;
+                    break;                 
+
+                // Verificar se a tecla ArrowDown foi pressionada
+                // Se sim, atribuir o valor true a variável tecla_baixo        
+                case 'ArrowDown':
+                    tecla_baixo = true;
+                    break;
+
+                // Verificar se a tecla S (qual será o código da tecla S?) foi pressionada
+                // Se sim, atribuir o valor true a variável tecla_s
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
+                case 'KeyS' :
+                    tecla_s = true;
+                    break;   
+            }
+            move();
+        }
+
+        document.addEventListener('keyup', teclaLiberada);
+
+        function teclaLiberada(e) {
+            console.log(e);
+            switch( e.code ) {
+
+                // Verificar se tecla ArrowRight libertada
+                // Se sim atribuir false a tecla_dir
+                case 'ArrowRight':
+                    tecla_dir = false;
+                    break;
+
+                // Verificar se tecla D libertada
+                // Se sim atribuir false a variável tecla_d                  
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES   
+                case 'KeyD' :
+                    tecla_d = false;
+                    break; 
+
+                case 'ArrowLeft':
+                    tecla_esq = false;
+                    break;
+
+                // Verificar se tecla A libertada
+                // Se sim atribuir false a variável tecla_a                 
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
+                case 'KeyA' :
+                    tecla_a = false;
+                    break;
+
+
+                case 'ArrowUp':
+                    tecla_cima = false;
+                    break;
+
+                // Verificar se tecla W libertada
+                // Se sim atribuir false a variável tecla_w                 
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES   
+                case 'KeyW' :
+                    tecla_w = false;
+                    break;                    
+
+
+                case 'ArrowDown':
+                    tecla_baixo = false;
+                    break;
+
+                // Verificar se tecla S libertada
+                // Se sim atribuir false a variável tecla_s                
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
+                case 'KeyS' :
+                    tecla_s = false;
+                    break;
+
+            }
+        }
+
+        function desenha() {
+
+            // Limpar o canvas (tela do jogo)
+            canvas.clearRect(0,0,600,480);
+            
+            //mostrador = "PosX: " + raquete.x + " PosY: " + raquete.y;
+            //canvas.fillStyle = "red";
+            //canvas.font = "24px serif";
+            //canvas.textAlign = "center";
+            //canvas.fillText(mostrador,300,30);
+            
+            // Desenhar a com a cor vermelho
+            // a raquete1 com 10px de largura e 50px de altura
+            canvas.beginPath();
+            canvas.fillStyle = "red";
+            canvas.rect(raquete1.x, raquete1.y, 10, 50);
+            canvas.fill();
+
+            // Desenhar a com a cor vermelho
+            // a raquete2 com 10px de largura e 50px de altura
+            //
+            // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES  
+            canvas.beginPath();
+            canvas.fillStyle = "blue";
+            canvas.rect(raquete2.x, raquete2.y, 10, 50);
+            canvas.fill();
+            
+        }
+
+        function move() {
+
+            // Verifica se o valor da variável tecla_dir é true
+            // o que indica que a raquete1 deve se mover para a direita
+            // um número de pixeis indicado pela sua velocidade 
+            if ( tecla_dir == true ) {
+                raquete1.x += 10;
+
+            // Se não verificar se o valor da variável tecla_esq é true
+            // o que indica que a raquete1 deve se mover para a esquerda
+            // um número de pixeis indicado pela sua velocidade                 
+            } else if ( tecla_esq == true ) {
+                raquete1.x -= 10;
+            }
+
+            // Verifica se o valor da variável tecla_cima é true
+            // o que indica que a raquete1 deve se mover para cima
+            // um número de pixeis indicado pela sua velocidade             
+            if ( tecla_cima == true ) {
+                raquete1.y -= 10;
+
+            // Se não verificar se o valor da variável tecla_baixo é true
+            // o que indica que a raquete1 deve se mover para baixo
+            // um número de pixeis indicado pela sua velocidade                     
+            } else if ( tecla_baixo == true ) {
+                raquete1.y += 10;
+            }
+
+            // Fazer os mesmos testes para as variáveis tecla_a, tecla_d
+            // tecla_w e tecla_s atualizando a posição da raquete2
+            //
+            // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES 
+            if ( tecla_d == true) {
+                raquete2.x +=10;
+            } else if ( tecla_a == true) {
+                raquete2.x -=10;
+            } 
+            
+            if ( tecla_w == true) {
+                raquete2.y -=10;
+            } else if ( tecla_s == true) {
+                raquete2.y +=10;
+            }
+
+            desenha();
+            
+        }
+      
+        desenha();
+
+
+    </script>
+</body>
+</html>
