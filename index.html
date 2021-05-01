@@ -13,41 +13,15 @@
 <body>
     <canvas id="jogo" width="600" height="480"></canvas>
     <script>
-        var jogo = document.getElementById("jogo");
-        var canvas = jogo.getContext("2d");
 
-        // criar o objeto raquete1 incialmente na posição x = 50
-        // y = 50 e velocidade 10px
-        var raquete1 = {x:50, y:50, vel:10};
-
-        // criar o objeto raquete2 incialmente na posição x = 150
-        // y = 150 e velocidade 10px 
-        // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
-        var raquete2 = {x:150, y:150, vel:10};
-
-        // Criar as variáveis tecla_dir, tecla_esq, tecla_cima, tecla_baixo
-        // inicialmente todas com valores false
-        var tecla_dir = false;
-        var tecla_esq = false;
-        var tecla_cima = false;
-        var tecla_baixo = false;
-
-        // Criar as variáveis tecla_d, tecla_a, tecla_w, tecla_s
-        // inicialmente todas com valores false
         //
-        // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
-        var tecla_d = false;
-        var tecla_a = false;
-        var tecla_w = false;
-        var tecla_s = false;
-
-        document.addEventListener('keydown', teclaPressionada);
-
+        // AS FUNÇÕES FICAM AQUI
+        //
         function teclaPressionada(e) {
             console.log(e.code);
             switch( e.code ) {
 
-                // Verificar se a tecla ArrowRight foi pressionada
+                // Verificar se a tecla ArrowRight (SetaDireita) foi pressionada
                 // Se sim, atribuir o valor true a variável tecla_dir
                 case 'ArrowRight':
                     tecla_dir = true;
@@ -61,7 +35,7 @@
                     tecla_d = true;
                     break;
 
-                // Verificar se a tecla ArrowLeft foi pressionada
+                // Verificar se a tecla ArrowLeft (SetaEsquerda) foi pressionada
                 // Se sim, atribuir o valor true a variável tecla_esq
                 case 'ArrowLeft':
                     tecla_esq = true;
@@ -75,7 +49,7 @@
                     tecla_a = true;
                     break;
 
-                // Verificar se a tecla ArrowUp foi pressionada
+                // Verificar se a tecla ArrowUp (SetaCima) foi pressionada
                 // Se sim, atribuir o valor true a variável tecla_cima               
                 case 'ArrowUp':
                     tecla_cima = true;
@@ -89,7 +63,7 @@
                     tecla_w = true;
                     break;                 
 
-                // Verificar se a tecla ArrowDown foi pressionada
+                // Verificar se a tecla ArrowDown (SetaBaixo) foi pressionada
                 // Se sim, atribuir o valor true a variável tecla_baixo        
                 case 'ArrowDown':
                     tecla_baixo = true;
@@ -105,8 +79,6 @@
             }
             move();
         }
-
-        document.addEventListener('keyup', teclaLiberada);
 
         function teclaLiberada(e) {
             console.log(e);
@@ -244,6 +216,40 @@
             
         }
       
+
+
+        var jogo = document.getElementById("jogo");
+        var canvas = jogo.getContext("2d");
+
+        // criar o objeto raquete1 incialmente na posição x = 50
+        // y = 50 e velocidade 10px
+        var raquete1 = {x:50, y:50, vel:10};
+
+        // criar o objeto raquete2 incialmente na posição x = 150
+        // y = 150 e velocidade 10px 
+        // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
+        var raquete2 = {x:150, y:150, vel:10};
+
+        // Criar as variáveis tecla_dir, tecla_esq, tecla_cima, tecla_baixo
+        // inicialmente todas com valores false
+        var tecla_dir = false;
+        var tecla_esq = false;
+        var tecla_cima = false;
+        var tecla_baixo = false;
+
+        // Criar as variáveis tecla_d, tecla_a, tecla_w, tecla_s
+        // inicialmente todas com valores false
+        //
+        // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
+        var tecla_d = false;
+        var tecla_a = false;
+        var tecla_w = false;
+        var tecla_s = false;
+
+        document.addEventListener('keydown', teclaPressionada);
+
+        document.addEventListener('keyup', teclaLiberada);
+
         desenha();
 
 
