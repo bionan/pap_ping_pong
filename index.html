@@ -154,7 +154,7 @@
             // a raquete1 com 10px de largura e 50px de altura
             canvas.beginPath();
             canvas.fillStyle = "red";
-            canvas.rect(raquete1.x, raquete1.y, 10, 50);
+            canvas.rect(raquete1.x, raquete1.y, raquete1.l, raquete1.a);
             canvas.fill();
 
             // Desenhar a com a cor vermelho
@@ -163,7 +163,7 @@
             // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES  
             canvas.beginPath();
             canvas.fillStyle = "blue";
-            canvas.rect(raquete2.x, raquete2.y, 10, 50);
+            canvas.rect(raquete2.x, raquete2.y, raquete2.l, raquete2.a);
             canvas.fill();
             
         }
@@ -174,26 +174,46 @@
             // o que indica que a raquete1 deve se mover para a direita
             // um número de pixeis indicado pela sua velocidade 
             if ( tecla_dir == true ) {
-                raquete1.x += 10;
+
+                raquete1.x += raquete1.vel;
+                
+                if ( raquete1.x + raquete2.l > jogo.width ) {
+                    raquete1.x -= raquete1.vel;
+                }
 
             // Se não verificar se o valor da variável tecla_esq é true
             // o que indica que a raquete1 deve se mover para a esquerda
             // um número de pixeis indicado pela sua velocidade                 
             } else if ( tecla_esq == true ) {
-                raquete1.x -= 10;
+
+                raquete1.x -= raquete1.vel;
+
+                if ( raquete1.x < 0 ) {
+                    raquete1.x = 0;
+                }
             }
 
             // Verifica se o valor da variável tecla_cima é true
             // o que indica que a raquete1 deve se mover para cima
             // um número de pixeis indicado pela sua velocidade             
             if ( tecla_cima == true ) {
-                raquete1.y -= 10;
+                raquete1.y -= raquete1.vel;
+
+                // raquete ultrapassou o limite superior? (y < 0)
+                if ( raquete1.y < 0 ) {
+                    raquete1.y = 0;
+                }
 
             // Se não verificar se o valor da variável tecla_baixo é true
             // o que indica que a raquete1 deve se mover para baixo
             // um número de pixeis indicado pela sua velocidade                     
             } else if ( tecla_baixo == true ) {
-                raquete1.y += 10;
+                raquete1.y += raquete1.vel;
+
+                // raquete ultrapassou o limite inferior? ( y + altura > altura do canvas
+                if ( raquete1.y + raquete1.a > jogo.height ) {
+                    raquete1.y -= raquete1.vel;
+                }
             }
 
             // Fazer os mesmos testes para as variáveis tecla_a, tecla_d
@@ -201,15 +221,36 @@
             //
             // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES 
             if ( tecla_d == true) {
-                raquete2.x +=10;
+                raquete2.x += raquete2.vel;
+
+                if ( raquete2.x + raquete2.l > jogo.width ) {
+                    raquete2.x -= raquete2.vel;
+                }
+
             } else if ( tecla_a == true) {
-                raquete2.x -=10;
+                
+                raquete2.x -= raquete2.vel;
+
+                if ( raquete2.x < 0 ) {
+                    raquete2.x = 0;
+                }
             } 
             
             if ( tecla_w == true) {
-                raquete2.y -=10;
+
+                raquete2.y -= raquete2.vel;
+
+                if (raquete2.y < 0 ) {
+                    raquete2.y = 0;
+                }
+
             } else if ( tecla_s == true) {
-                raquete2.y +=10;
+                
+                raquete2.y += raquete2.vel;
+
+                if ( raquete2.y + raquete2.a > jogo.height ) {
+                    raquete2.y  -= raquete2.vel;
+                }
             }
 
             desenha();
@@ -223,12 +264,12 @@
 
         // criar o objeto raquete1 incialmente na posição x = 50
         // y = 50 e velocidade 10px
-        var raquete1 = {x:50, y:50, vel:10};
+        var raquete1 = {x:50, y:50, a:50, l:10, vel:10};
 
         // criar o objeto raquete2 incialmente na posição x = 150
         // y = 150 e velocidade 10px 
         // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
-        var raquete2 = {x:150, y:150, vel:10};
+        var raquete2 = {x:150, y:150, a:50, l:10, vel:10};
 
         // Criar as variáveis tecla_dir, tecla_esq, tecla_cima, tecla_baixo
         // inicialmente todas com valores false
