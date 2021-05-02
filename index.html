@@ -172,6 +172,8 @@
             jogo.rect(bola.x, bola.y, bola.larg, bola.alt);
             jogo.fill();
 
+            bola.x += bola.velx;
+            bola.y += bola.vely;
 
             requestAnimationFrame(desenha);
             
