@@ -270,8 +270,26 @@
                 }
             }
 
+            // Mover a bola
+
             bola.x += bola.velx;
             bola.y += bola.vely;
+
+            // Verificar se é ponto para algum dos jogadores
+
+            if ( bola.x < 0 ) {
+                // ponto para o jogador 2
+                raquete2.placar++;
+
+                // reiniciar jogo
+                bolaAoCentro();
+            }
+
+            if ( bola.x > canvas.width ) {
+                // ponto para o jogador 1
+                raquete1.placar++;
+                bolaAoCentro();
+            }
 
             // verificar se bola sai fora dos limites do canvas
             if ( bola.x < 0 || bola.x > canvas.width ) {
@@ -294,7 +312,10 @@
             return colisaoX && colisaoY;
         }
       
-
+        function bolaAoCentro() {
+            bola.x = canvas.width/2;
+            bola.y = canvas.height/2
+        }
 
         var canvas = document.getElementById("jogo");
         var jogo = canvas.getContext("2d");
