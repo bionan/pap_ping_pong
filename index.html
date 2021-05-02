@@ -153,8 +153,8 @@
                 bola.velx = -bola.velx;
             }
             
-            mostrador = "PosX: " + raquete1.x + " PosY: " + raquete1.y;
-            jogo.fillStyle = "red";
+            mostrador = "Jogador 1: " + raquete1.placar + " Jogador 2: " + raquete2.placar;
+            jogo.fillStyle = "white";
             jogo.font = "24px serif";
             jogo.textAlign = "center";
             jogo.fillText(mostrador,300,30);
@@ -301,12 +301,12 @@
 
         // criar o objeto raquete1 incialmente na posição x = 50
         // y = 50 e velocidade 10px
-        var raquete1 = {x:50, y:50, alt:100, larg:3, vel:10};
+        var raquete1 = {x:50, y:50, alt:100, larg:3, vel:10, placar:0};
 
         // criar o objeto raquete2 incialmente na posição x = 150
         // y = 150 e velocidade 10px 
         // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
-        var raquete2 = {x:150, y:150, alt:100, larg:3, vel:10};
+        var raquete2 = {x:150, y:150, alt:100, larg:3, vel:10, placar:0};
 
         // Criar a bola
         //
