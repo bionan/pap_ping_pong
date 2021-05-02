@@ -18,7 +18,7 @@
         // AS FUNÇÕES FICAM AQUI
         //
         function teclaPressionada(e) {
-            console.log(e.code);
+            //console.log(e.code);
             switch( e.code ) {
 
                 // Verificar se a tecla ArrowRight (SetaDireita) foi pressionada
@@ -81,7 +81,7 @@
         }
 
         function teclaLiberada(e) {
-            console.log(e);
+            //console.log(e);
             switch( e.code ) {
 
                 // Verificar se tecla ArrowRight libertada
@@ -255,8 +255,22 @@
                 }
             }
 
+            checarColisao(raquete1, raquete2);
+
             desenha();
             
+        }
+
+
+        //
+        // Retorna true se há colisão e false caso não haja colisão
+        //
+        function checarColisao(obj1, obj2) {
+
+            var colisaoX = obj1.x + obj1.l > obj2.x && obj1.x < obj2.x + obj2.l;
+            var colisaoY = obj1.y + obj1.a > obj2.y && obj1.y < obj2.y + obj2.a;
+
+            return colisaoX && colisaoY;
         }
       
 
