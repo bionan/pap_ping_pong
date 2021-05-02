@@ -148,7 +148,10 @@
             move();
 
             // testar colisao
-            checarColisao(raquete1,raquete2);
+            if ( existeColisao(raquete1,bola) || existeColisao(raquete2,bola) ) {
+                // alterar a direção da bola
+                bola.velx = -bola.velx;
+            }
             
             //mostrador = "PosX: " + raquete.x + " PosY: " + raquete.y;
             //canvas.fillStyle = "red";
@@ -280,11 +283,10 @@
             
         }
 
-
         //
         // Retorna true se há colisão e false caso não haja colisão
         //
-        function checarColisao(obj1, obj2) {
+        function existeColisao(obj1, obj2) {
 
             var colisaoX = obj1.x + obj1.larg > obj2.x && obj1.x < obj2.x + obj2.larg;
             var colisaoY = obj1.y + obj1.alt > obj2.y && obj1.y < obj2.y + obj2.alt;
@@ -299,12 +301,12 @@
 
         // criar o objeto raquete1 incialmente na posição x = 50
         // y = 50 e velocidade 10px
-        var raquete1 = {x:50, y:50, alt:100, larg:55, vel:10};
+        var raquete1 = {x:50, y:50, alt:100, larg:3, vel:10};
 
         // criar o objeto raquete2 incialmente na posição x = 150
         // y = 150 e velocidade 10px 
         // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
-        var raquete2 = {x:150, y:150, alt:100, larg:55, vel:10};
+        var raquete2 = {x:150, y:150, alt:100, larg:3, vel:10};
 
         // Criar a bola
         //
@@ -330,7 +332,7 @@
 
         document.addEventListener('keyup', teclaLiberada);
 
-        desenha();
+        requestAnimationFrame(desenha);
 
 
     </script>
