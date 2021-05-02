@@ -142,7 +142,7 @@
         function desenha() {
 
             // Limpar o canvas (tela do jogo)
-            canvas.clearRect(0,0,600,480);
+            jogo.clearRect(0,0,600,480);
             
             //mostrador = "PosX: " + raquete.x + " PosY: " + raquete.y;
             //canvas.fillStyle = "red";
@@ -152,19 +152,26 @@
             
             // Desenhar a com a cor vermelho
             // a raquete1 com 10px de largura e 50px de altura
-            canvas.beginPath();
-            canvas.fillStyle = "red";
-            canvas.rect(raquete1.x, raquete1.y, raquete1.l, raquete1.a);
-            canvas.fill();
+            jogo.beginPath();
+            jogo.fillStyle = "red";
+            jogo.rect(raquete1.x, raquete1.y, raquete1.larg, raquete1.alt);
+            jogo.fill();
 
             // Desenhar a com a cor vermelho
             // a raquete2 com 10px de largura e 50px de altura
             //
             // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES  
-            canvas.beginPath();
-            canvas.fillStyle = "blue";
-            canvas.rect(raquete2.x, raquete2.y, raquete2.l, raquete2.a);
-            canvas.fill();
+            jogo.beginPath();
+            jogo.fillStyle = "blue";
+            jogo.rect(raquete2.x, raquete2.y, raquete2.larg, raquete2.alt);
+            jogo.fill();
+
+            // Desenhar a bola
+            jogo.beginPath();
+            jogo.fillStyle = "white";
+            jogo.rect(bola.x, bola.y, bola.larg, bola.alt);
+            jogo.fill();
+
 
             requestAnimationFrame(desenha);
             
@@ -179,7 +186,7 @@
 
                 raquete1.x += raquete1.vel;
                 
-                if ( raquete1.x + raquete2.l > jogo.width ) {
+                if ( raquete1.x + raquete2.larg > canvas.width ) {
                     raquete1.x -= raquete1.vel;
                 }
 
@@ -213,7 +220,7 @@
                 raquete1.y += raquete1.vel;
 
                 // raquete ultrapassou o limite inferior? ( y + altura > altura do canvas
-                if ( raquete1.y + raquete1.a > jogo.height ) {
+                if ( raquete1.y + raquete1.alt > canvas.height ) {
                     raquete1.y -= raquete1.vel;
                 }
             }
@@ -225,7 +232,7 @@
             if ( tecla_d == true) {
                 raquete2.x += raquete2.vel;
 
-                if ( raquete2.x + raquete2.l > jogo.width ) {
+                if ( raquete2.x + raquete2.larg > canvas.width ) {
                     raquete2.x -= raquete2.vel;
                 }
 
@@ -250,7 +257,7 @@
                 
                 raquete2.y += raquete2.vel;
 
-                if ( raquete2.y + raquete2.a > jogo.height ) {
+                if ( raquete2.y + raquete2.alt > canvas.height ) {
                     raquete2.y  -= raquete2.vel;
                 }
             }
@@ -267,25 +274,29 @@
         //
         function checarColisao(obj1, obj2) {
 
-            var colisaoX = obj1.x + obj1.l > obj2.x && obj1.x < obj2.x + obj2.l;
-            var colisaoY = obj1.y + obj1.a > obj2.y && obj1.y < obj2.y + obj2.a;
+            var colisaoX = obj1.x + obj1.larg > obj2.x && obj1.x < obj2.x + obj2.larg;
+            var colisaoY = obj1.y + obj1.alt > obj2.y && obj1.y < obj2.y + obj2.alt;
 
             return colisaoX && colisaoY;
         }
       
 
 
-        var jogo = document.getElementById("jogo");
-        var canvas = jogo.getContext("2d");
+        var canvas = document.getElementById("jogo");
+        var jogo = canvas.getContext("2d");
 
         // criar o objeto raquete1 incialmente na posição x = 50
         // y = 50 e velocidade 10px
-        var raquete1 = {x:50, y:50, a:100, l:55, vel:10};
+        var raquete1 = {x:50, y:50, alt:100, larg:55, vel:10};
 
         // criar o objeto raquete2 incialmente na posição x = 150
         // y = 150 e velocidade 10px 
         // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
-        var raquete2 = {x:150, y:150, a:100, l:55, vel:10};
+        var raquete2 = {x:150, y:150, alt:100, larg:55, vel:10};
+
+        // Criar a bola
+        //
+        var bola = { x: canvas.width/2, y:canvas.height/2, alt:10, larg:10, velx:5, vely:-5 };
 
         // Criar as variáveis tecla_dir, tecla_esq, tecla_cima, tecla_baixo
         // inicialmente todas com valores false
