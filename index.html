@@ -143,6 +143,12 @@
 
             // Limpar o canvas (tela do jogo)
             jogo.clearRect(0,0,600,480);
+
+            // mover os objetos
+            move();
+
+            // testar colisao
+            checarColisao(raquete1,raquete2);
             
             //mostrador = "PosX: " + raquete.x + " PosY: " + raquete.y;
             //canvas.fillStyle = "red";
@@ -171,9 +177,6 @@
             jogo.fillStyle = "white";
             jogo.rect(bola.x, bola.y, bola.larg, bola.alt);
             jogo.fill();
-
-            bola.x += bola.velx;
-            bola.y += bola.vely;
 
             requestAnimationFrame(desenha);
             
@@ -264,9 +267,16 @@
                 }
             }
 
-            checarColisao(raquete1, raquete2);
+            bola.x += bola.velx;
+            bola.y += bola.vely;
 
-            desenha();
+            // verificar se bola sai fora dos limites do canvas
+            if ( bola.x < 0 || bola.x > canvas.width ) {
+                bola.velx = -bola.velx;
+            }
+            if ( bola.y > canvas.height || bola.y < 0 ) {
+                bola.vely = -bola.vely;
+            }
             
         }
 
