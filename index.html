@@ -310,13 +310,8 @@
             bola.x += bola.velx;
             bola.y += bola.vely;
 
-            // Obrigar a bola a ficar dentro dos limite 
-            // do campo de jogo
-            //
-            if ( bola.x < 0 || bola.x > canvas.width ) {
-                bola.velx = -bola.velx;
-            }
-            if ( bola.y > canvas.height || bola.y < 0 ) {
+
+            if ( bola.y + bola.alt >= canvas.height || bola.y <= 0 ) {
                 bola.vely = -bola.vely;
             }
 
