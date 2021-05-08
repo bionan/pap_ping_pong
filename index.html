@@ -53,7 +53,7 @@
             moveRaquetes();
             moveBola();
             testaColisao();
-            atualizaMarcador();
+            atualizaPontos();
             desenha();
 
         }
@@ -181,23 +181,19 @@
             // Limpar o canvas (tela do jogo)
             ctx.clearRect(0,0,canvas.width, canvas.height);
             
-            mostrador = "Jogador 1: " + raquete1.pontos + " Jogador 2: " + raquete2.pontos;
+            placar = "Jogador 1: " + raquete1.pontos + " Jogador 2: " + raquete2.pontos;
             ctx.fillStyle = "white";
             ctx.font = "24px serif";
             ctx.textAlign = "center";
-            ctx.fillText(mostrador,300,30);
+            ctx.fillText(placar,300,30);
             
-            // Desenhar a com a cor vermelho
-            // a raquete1 com 10px de largura e 50px de altura
+            // Desenhar a raquete 1
             ctx.beginPath();
             ctx.fillStyle = "red";
             ctx.rect(raquete1.x, raquete1.y, raquete1.larg, raquete1.alt);
             ctx.fill();
 
-            // Desenhar a com a cor vermelho
-            // a raquete2 com 10px de largura e 50px de altura
-            //
-            // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES  
+            // Desenhar a raquete 2  
             ctx.beginPath();
             ctx.fillStyle = "blue";
             ctx.rect(raquete2.x, raquete2.y, raquete2.larg, raquete2.alt);
@@ -325,7 +321,7 @@
             }
         }
   
-        function atualizaMarcador() {
+        function atualizaPontos() {
 
             if ( bola.x < 0 ) {
                 // ponto para o jogador 2
