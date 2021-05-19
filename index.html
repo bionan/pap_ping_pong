@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -22,32 +23,24 @@
     <script>
 
         var canvas = document.getElementById("jogo");
+
         var ctx = canvas.getContext("2d");
 
-        console.log(canvas.width + ' ' + canvas.height);
+        var raquete1 = { x: 50, y: 50, alt: 100, larg: 3, vel: 10, pontos: 0 };
 
-        // criar o objeto raquete2 incialmente na posição x = 50
-        // y = 50, altura 100px, largura 3px, velocidade 10px e 0 pontos marcados 
-        var raquete1 = {x:50, y:50, alt:100, larg:3, vel:10, pontos:0};
+        var raquete2 = { x: canvas.width - 50, y: 150, alt: 100, larg: 3, vel: 10, pontos: 0 };
 
+        var bola = { x: canvas.width / 2, y: canvas.height / 2, alt: 10, larg: 10, velx: 5, vely: -5 };
 
-        // criar o objeto raquete2 incialmente na posição x = 150
-        // y = 150, altura 100px, largura 3px, velocidade 10px e 0 pontos marcados 
-        var raquete2 = {x:150, y:150, alt:100, larg:3, vel:10, pontos:0};
+        var r1tecla = { esq: false, dir: false, cima: false, baixo: false };
 
-        // criar a bola, inicialmente localizada no centro do canvas
-        // com 10px de altura e largura, velocidade direção x de 5px e
-        // velocidade direção y de -5px
-        var bola = { x: canvas.width/2, y:canvas.height/2, alt:10, larg:10, velx:5, vely:-5 };
-
-        var r1tecla = { esq:false, dir:false, cima:false, baixo: false};
-        var r2tecla = { esq:false, dir:false, cima:false, baixo: false};
+        var r2tecla = { esq: false, dir: false, cima: false, baixo: false };
 
         document.addEventListener('keydown', teclaPressionada);
         document.addEventListener('keyup', teclaLiberada);
 
-        setInterval(jogo,20);
- 
+        setInterval(jogo, 20); 
+
         function jogo() {
 
             moveRaquetes();
@@ -57,136 +50,145 @@
             desenha();
 
         }
-        
 
-        function teclaPressionada(e) {
-            //console.log(e.code);
-            switch( e.code ) {
 
-                // Verificar se a tecla ArrowRight (SetaDireita) foi pressionada
-                case 'ArrowRight':
-                    r2tecla.dir = true;
-                    break;
+        function moveRaquetes() {
 
-                case 'KeyD' :
-                    r1tecla.dir = true;
-                    break;
+            // VERIFICAR SE RAQUETE1 PRECISA SER MOVIDA
+            //
+            if (r1tecla.dir == true) {
 
-                // Verificar se a tecla ArrowLeft (SetaEsquerda) foi pressionada
-                // Se sim, atribuir o valor true a variável tecla_esq
-                case 'ArrowLeft':
-                    r2tecla.esq = true;
-                    break;
+                raquete1.x = raquete1.x + raquete1.vel;
 
-                // Verificar se a tecla A (qual será o código da tecla A?) foi pressionada
-                // Se sim, atribuir o valor true a variável tecla_a
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES
-                case 'KeyA' :
-                    r1tecla.esq = true;
-                    break;
+                if (raquete1.x + raquete1.larg > canvas.width) {
+                    raquete1.x = raquete1.x - raquete1.vel;
+                }
 
-                // Verificar se a tecla ArrowUp (SetaCima) foi pressionada
-                // Se sim, atribuir o valor true a variável tecla_cima               
-                case 'ArrowUp':
-                    r2tecla.cima = true;
-                    break;
+            } else if (r1tecla.esq == true) {
 
-                // Verificar se a tecla W (qual será o código da tecla W?) foi pressionada
-                // Se sim, atribuir o valor true a variável tecla_w
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES  
-                case 'KeyW' : 
-                    r1tecla.cima = true;
-                    break;                 
+                raquete1.x = raquete1.x - raquete1.vel;
 
-                // Verificar se a tecla ArrowDown (SetaBaixo) foi pressionada
-                // Se sim, atribuir o valor true a variável tecla_baixo        
-                case 'ArrowDown':
-                    r2tecla.baixo = true;
-                    break;
-
-                // Verificar se a tecla S (qual será o código da tecla S?) foi pressionada
-                // Se sim, atribuir o valor true a variável tecla_s
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
-                case 'KeyS' :
-                    r1tecla.baixo = true;
-                    break;   
+                if (raquete1.x < 0) {
+                    raquete1.x = 0;
+                }
             }
-            //move();
+
+            if (r1tecla.cima == true) {
+                raquete1.y = raquete1.y - raquete1.vel;
+
+                // raquete ultrapassou o limite superior? (y < 0)
+                if (raquete1.y < 0) {
+                    raquete1.y = 0;
+                }
+
+            } else if (r1tecla.baixo == true) {
+                raquete1.y = raquete1.y + raquete1.vel;
+
+                // raquete ultrapassou o limite inferior? ( y + altura > altura do canvas
+                if (raquete1.y + raquete1.alt > canvas.height) {
+                    raquete1.y = raquete1.y - raquete1.vel;
+                }
+            }
+
+            // VERIFICAR SE RAQUETE2 PRECISA SER MOVIDA
+            //
+            if (r2tecla.dir == true) {
+                raquete2.x = raquete2.x + raquete2.vel;
+
+                if (raquete2.x + raquete2.larg > canvas.width) {
+                    raquete2.x = raquete2.x - raquete2.vel;
+                }
+
+            } else if (r2tecla.esq == true) {
+
+                raquete2.x = raquete2.x - raquete2.vel;
+
+                if (raquete2.x < 0) {
+                    raquete2.x = 0;
+                }
+            }
+
+            if (r2tecla.cima == true) {
+
+                raquete2.y = raquete2.y - raquete2.vel;
+
+                if (raquete2.y < 0) {
+                    raquete2.y = 0;
+                }
+
+            } else if (r2tecla.baixo == true) {
+
+                raquete2.y = raquete2.y + raquete2.vel;
+
+                if (raquete2.y + raquete2.alt > canvas.height) {
+                    raquete2.y = raquete2.y - raquete2.vel;
+                }
+            }
+
         }
 
-        function teclaLiberada(e) {
-            //console.log(e);
-            switch( e.code ) {
+        function moveBola() {
 
-                // Verificar se tecla ArrowRight libertada
-                // Se sim atribuir false a tecla_dir
-                case 'ArrowRight':
-                    r2tecla.dir = false;
-                    break;
-
-                // Verificar se tecla D libertada
-                // Se sim atribuir false a variável tecla_d                  
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES   
-                case 'KeyD' :
-                    r1tecla.dir = false;
-                    break; 
-
-                case 'ArrowLeft':
-                    r2tecla.esq = false;
-                    break;
-
-                // Verificar se tecla A libertada
-                // Se sim atribuir false a variável tecla_a                 
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
-                case 'KeyA' :
-                    r1tecla.esq = false;
-                    break;
+            bola.x = bola.x + bola.velx;
+            bola.y = bola.y + bola.vely;
 
 
-                case 'ArrowUp':
-                    r2tecla.cima = false;
-                    break;
-
-                // Verificar se tecla W libertada
-                // Se sim atribuir false a variável tecla_w                 
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES   
-                case 'KeyW' :
-                    r1tecla.cima = false;
-                    break;                    
-
-
-                case 'ArrowDown':
-                    r2tecla.baixo = false;
-                    break;
-
-                // Verificar se tecla S libertada
-                // Se sim atribuir false a variável tecla_s                
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
-                case 'KeyS' :
-                    r1tecla.baixo = false;
-                    break;
-
+            if (bola.y + bola.alt >= canvas.height || bola.y <= 0) {
+                bola.vely = -bola.vely;
             }
+
+        }
+
+        function testaColisao() {
+
+            if (existeColisao(raquete1, bola) || existeColisao(raquete2, bola)) {
+                // alterar a direção da bola
+                bola.velx = -bola.velx;
+            }
+        }
+
+        function existeColisao(obj1, obj2) {
+
+            var colisaoX = obj1.x + obj1.larg > obj2.x && obj1.x < obj2.x + obj2.larg;
+            var colisaoY = obj1.y + obj1.alt > obj2.y && obj1.y < obj2.y + obj2.alt;
+
+            return colisaoX && colisaoY;
+        }
+
+        function atualizaPontos() {
+
+            if (bola.x <= 0) {
+                // ponto para o jogador 2
+                raquete2.pontos++;
+
+                // reiniciar jogo
+                bolaAoCentro();
+            }
+
+            if (bola.x + bola.larg >= canvas.width) {
+                // ponto para o jogador 1
+                raquete1.pontos++;
+                bolaAoCentro();
+            }
+
+        }
+
+        function bolaAoCentro() {
+            bola.x = canvas.width / 2;
+            bola.y = canvas.height / 2
         }
 
         function desenha() {
 
             // Limpar o canvas (tela do jogo)
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             placar = "Jogador 1: " + raquete1.pontos + " Jogador 2: " + raquete2.pontos;
             ctx.fillStyle = "white";
             ctx.font = "24px serif";
             ctx.textAlign = "center";
-            ctx.fillText(placar,300,30);
-            
+            ctx.fillText(placar, 300, 30);
+
             // Desenhar a raquete 1
             ctx.beginPath();
             ctx.fillStyle = "red";
@@ -204,141 +206,107 @@
             ctx.fillStyle = "white";
             ctx.rect(bola.x, bola.y, bola.larg, bola.alt);
             ctx.fill();
-            
-        }
-
-        function moveRaquetes() {
-
-            // Verificar se a raquete1 deve ser movida
-            // e se permance dentro do campo de jogo
-            //
-            if ( r1tecla.dir == true ) {
-
-                raquete1.x += raquete1.vel;
-                
-                if ( raquete1.x + raquete2.larg > canvas.width ) {
-                    raquete1.x -= raquete1.vel;
-                }
-                
-            } else if ( r1tecla.esq == true ) {
-
-                raquete1.x -= raquete1.vel;
-
-                if ( raquete1.x < 0 ) {
-                    raquete1.x = 0;
-                }
-            }
-          
-            if ( r1tecla.cima == true ) {
-                raquete1.y -= raquete1.vel;
-
-                // raquete ultrapassou o limite superior? (y < 0)
-                if ( raquete1.y < 0 ) {
-                    raquete1.y = 0;
-                }
-                   
-            } else if ( r1tecla.baixo == true ) {
-                raquete1.y += raquete1.vel;
-
-                // raquete ultrapassou o limite inferior? ( y + altura > altura do canvas
-                if ( raquete1.y + raquete1.alt > canvas.height ) {
-                    raquete1.y -= raquete1.vel;
-                }
-            }
-
-            // Verificar se a raquete2 deve ser movida
-            // e se permance dentro do campo de jogo
-            //
-            if ( r2tecla.dir == true) {
-                raquete2.x += raquete2.vel;
-
-                if ( raquete2.x + raquete2.larg > canvas.width ) {
-                    raquete2.x -= raquete2.vel;
-                }
-
-            } else if ( r2tecla.esq == true) {
-                
-                raquete2.x -= raquete2.vel;
-
-                if ( raquete2.x < 0 ) {
-                    raquete2.x = 0;
-                }
-            } 
-            
-            if ( r2tecla.cima == true) {
-
-                raquete2.y -= raquete2.vel;
-
-                if (raquete2.y < 0 ) {
-                    raquete2.y = 0;
-                }
-
-            } else if ( r2tecla.baixo == true) {
-                
-                raquete2.y += raquete2.vel;
-
-                if ( raquete2.y + raquete2.alt > canvas.height ) {
-                    raquete2.y  -= raquete2.vel;
-                }
-            }
-
-            
-        }
-
-        //
-        // Retorna true se há colisão e false caso não haja colisão
-        //
-        function existeColisao(obj1, obj2) {
-
-            var colisaoX = obj1.x + obj1.larg > obj2.x && obj1.x < obj2.x + obj2.larg;
-            var colisaoY = obj1.y + obj1.alt > obj2.y && obj1.y < obj2.y + obj2.alt;
-
-            return colisaoX && colisaoY;
-        }
-      
-        function bolaAoCentro() {
-            bola.x = canvas.width/2;
-            bola.y = canvas.height/2
-        }
-
-        function moveBola() {
-
-            bola.x += bola.velx;
-            bola.y += bola.vely;
-
-
-            if ( bola.y + bola.alt >= canvas.height || bola.y <= 0 ) {
-                bola.vely = -bola.vely;
-            }
 
         }
+        
+        function teclaPressionada(e) {
 
-        function testaColisao() {
+            switch (e.code) {
 
-            if ( existeColisao(raquete1,bola) || existeColisao(raquete2,bola) ) {
-                // alterar a direção da bola
-                bola.velx = -bola.velx;
+                case 'ArrowRight':
+                    r2tecla.dir = true;
+                    break;
+
+                case 'KeyD':
+                    r1tecla.dir = true;
+                    break;
+
+                case 'ArrowLeft':
+                    r2tecla.esq = true;
+                    break;
+
+                case 'KeyA':
+                    r1tecla.esq = true;
+                    break;
+
+                case 'ArrowUp':
+                    r2tecla.cima = true;
+                    break;
+
+                case 'KeyW':
+                    r1tecla.cima = true;
+                    break;
+
+                case 'ArrowDown':
+                    r2tecla.baixo = true;
+                    break;
+
+                case 'KeyS':
+                    r1tecla.baixo = true;
+                    break;
             }
         }
-  
-        function atualizaPontos() {
 
-            if ( bola.x < 0 ) {
-                // ponto para o jogador 2
-                raquete2.pontos++;
+        function teclaLiberada(e) {
+            //console.log(e);
+            switch (e.code) {
 
-                // reiniciar jogo
-                bolaAoCentro();
+                // Verificar se tecla ArrowRight libertada
+                // Se sim atribuir false a tecla_dir
+                case 'ArrowRight':
+                    r2tecla.dir = false;
+                    break;
+
+                // Verificar se tecla D libertada
+                // Se sim atribuir false a variável tecla_d                  
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES   
+                case 'KeyD':
+                    r1tecla.dir = false;
+                    break;
+
+                case 'ArrowLeft':
+                    r2tecla.esq = false;
+                    break;
+
+                // Verificar se tecla A libertada
+                // Se sim atribuir false a variável tecla_a                 
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
+                case 'KeyA':
+                    r1tecla.esq = false;
+                    break;
+
+
+                case 'ArrowUp':
+                    r2tecla.cima = false;
+                    break;
+
+                // Verificar se tecla W libertada
+                // Se sim atribuir false a variável tecla_w                 
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES   
+                case 'KeyW':
+                    r1tecla.cima = false;
+                    break;
+
+
+                case 'ArrowDown':
+                    r2tecla.baixo = false;
+                    break;
+
+                // Verificar se tecla S libertada
+                // Se sim atribuir false a variável tecla_s                
+                //
+                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
+                case 'KeyS':
+                    r1tecla.baixo = false;
+                    break;
+
             }
-
-            if ( bola.x > canvas.width ) {
-                // ponto para o jogador 1
-                raquete1.pontos++;
-                bolaAoCentro();
-            }
-
         }
-  
-  </script>
+
+    </script>
 </body>
+
 </html>
