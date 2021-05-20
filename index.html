@@ -109,6 +109,7 @@
             if (existeColisao(raquete1, bola) || existeColisao(raquete2, bola)) {
                 // alterar a direção da bola
                 bola.velx = -bola.velx;
+                bola.x = bola.x +  2 * bola.velx;
             }
         }
 
