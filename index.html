@@ -32,9 +32,9 @@
 
         var bola = { x: canvas.width / 2, y: canvas.height / 2, alt: 10, larg: 10, velx: 5, vely: -5 };
 
-        var r1tecla = { esq: false, dir: false, cima: false, baixo: false };
+        var r1tecla = { cima: false, baixo: false };
 
-        var r2tecla = { esq: false, dir: false, cima: false, baixo: false };
+        var r2tecla = { cima: false, baixo: false };
 
         document.addEventListener('keydown', teclaPressionada);
         document.addEventListener('keyup', teclaLiberada);
@@ -53,25 +53,6 @@
 
 
         function moveRaquetes() {
-
-            // VERIFICAR SE RAQUETE1 PRECISA SER MOVIDA
-            //
-            if (r1tecla.dir == true) {
-
-                raquete1.x = raquete1.x + raquete1.vel;
-
-                if (raquete1.x + raquete1.larg > canvas.width) {
-                    raquete1.x = raquete1.x - raquete1.vel;
-                }
-
-            } else if (r1tecla.esq == true) {
-
-                raquete1.x = raquete1.x - raquete1.vel;
-
-                if (raquete1.x < 0) {
-                    raquete1.x = 0;
-                }
-            }
 
             if (r1tecla.cima == true) {
                 raquete1.y = raquete1.y - raquete1.vel;
@@ -92,22 +73,6 @@
 
             // VERIFICAR SE RAQUETE2 PRECISA SER MOVIDA
             //
-            if (r2tecla.dir == true) {
-                raquete2.x = raquete2.x + raquete2.vel;
-
-                if (raquete2.x + raquete2.larg > canvas.width) {
-                    raquete2.x = raquete2.x - raquete2.vel;
-                }
-
-            } else if (r2tecla.esq == true) {
-
-                raquete2.x = raquete2.x - raquete2.vel;
-
-                if (raquete2.x < 0) {
-                    raquete2.x = 0;
-                }
-            }
-
             if (r2tecla.cima == true) {
 
                 raquete2.y = raquete2.y - raquete2.vel;
@@ -240,10 +205,6 @@
                     r2tecla.cima = false;
                     break;
 
-                // Verificar se tecla W libertada
-                // Se sim atribuir false a variável tecla_w                 
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES   
                 case 'KeyW':
                     r1tecla.cima = false;
                     break;
@@ -252,11 +213,7 @@
                 case 'ArrowDown':
                     r2tecla.baixo = false;
                     break;
-
-                // Verificar se tecla S libertada
-                // Se sim atribuir false a variável tecla_s                
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
+ 
                 case 'KeyS':
                     r1tecla.baixo = false;
                     break;
