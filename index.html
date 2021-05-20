@@ -213,22 +213,6 @@
 
             switch (e.code) {
 
-                case 'ArrowRight':
-                    r2tecla.dir = true;
-                    break;
-
-                case 'KeyD':
-                    r1tecla.dir = true;
-                    break;
-
-                case 'ArrowLeft':
-                    r2tecla.esq = true;
-                    break;
-
-                case 'KeyA':
-                    r1tecla.esq = true;
-                    break;
-
                 case 'ArrowUp':
                     r2tecla.cima = true;
                     break;
@@ -250,32 +234,6 @@
         function teclaLiberada(e) {
             //console.log(e);
             switch (e.code) {
-
-                // Verificar se tecla ArrowRight libertada
-                // Se sim atribuir false a tecla_dir
-                case 'ArrowRight':
-                    r2tecla.dir = false;
-                    break;
-
-                // Verificar se tecla D libertada
-                // Se sim atribuir false a variável tecla_d                  
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES   
-                case 'KeyD':
-                    r1tecla.dir = false;
-                    break;
-
-                case 'ArrowLeft':
-                    r2tecla.esq = false;
-                    break;
-
-                // Verificar se tecla A libertada
-                // Se sim atribuir false a variável tecla_a                 
-                //
-                // ESCREVA O CÓDIGO NAS LINHAS SEGUINTES    
-                case 'KeyA':
-                    r1tecla.esq = false;
-                    break;
 
 
                 case 'ArrowUp':
