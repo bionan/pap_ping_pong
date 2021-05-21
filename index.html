@@ -65,7 +65,7 @@
             } else if (r1tecla.baixo == true) {
                 raquete1.y = raquete1.y + raquete1.vel;
 
-                // raquete ultrapassou o limite inferior? ( y + altura > altura do canvas
+                // raquete ultrapassou o limite inferior?
                 if (raquete1.y + raquete1.alt > canvas.height) {
                     raquete1.y = raquete1.y - raquete1.vel;
                 }
@@ -115,17 +115,17 @@
 
         function existeColisao(obj1, obj2) {
 
-            var colisaoX = obj1.x + obj1.larg > obj2.x && obj1.x < obj2.x + obj2.larg;
-            var colisaoY = obj1.y + obj1.alt > obj2.y && obj1.y < obj2.y + obj2.alt;
+            var colisaoHorz = obj1.x + obj1.larg > obj2.x && obj1.x < obj2.x + obj2.larg;
+            var colisaoVert = obj1.y + obj1.alt > obj2.y && obj1.y < obj2.y + obj2.alt;
 
-            return colisaoX && colisaoY;
+            return colisaoHorz && colisaoVert;
         }
 
         function atualizaPontos() {
 
             if (bola.x <= 0) {
                 // ponto para o jogador 2
-                raquete2.pontos++;
+                raquete2.pontos = raquete2.pontos + 1;
 
                 // reiniciar jogo
                 bolaAoCentro();
@@ -133,7 +133,7 @@
 
             if (bola.x + bola.larg >= canvas.width) {
                 // ponto para o jogador 1
-                raquete1.pontos++;
+                raquete1.pontos = raquete1.pontos + 1;
                 bolaAoCentro();
             }
 
@@ -198,9 +198,8 @@
         }
 
         function teclaLiberada(e) {
-            //console.log(e);
+ 
             switch (e.code) {
-
 
                 case 'ArrowUp':
                     r2tecla.cima = false;
@@ -209,7 +208,6 @@
                 case 'KeyW':
                     r1tecla.cima = false;
                     break;
-
 
                 case 'ArrowDown':
                     r2tecla.baixo = false;
