@@ -39,6 +39,8 @@
         document.addEventListener('keydown', teclaPressionada);
         document.addEventListener('keyup', teclaLiberada);
 
+        var somBola = new Audio('bola2.mp3');
+
         setInterval(jogo, 20); 
 
         function jogo() {
@@ -110,6 +112,7 @@
                 // alterar a direção da bola
                 bola.velx = -bola.velx;
                 bola.x = bola.x +  2 * bola.velx;
+                somBola.play();
             }
         }
 
