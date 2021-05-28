@@ -39,7 +39,8 @@
         document.addEventListener('keydown', teclaPressionada);
         document.addEventListener('keyup', teclaLiberada);
 
-        var somBola = new Audio('bola2.mp3');
+        var somBola = new Audio('bola1.mp3');
+        var somLateral = new Audio('bola2.mp3');
 
         setInterval(jogo, 20); 
 
@@ -102,6 +103,7 @@
 
             if (bola.y + bola.alt >= canvas.height || bola.y <= 0) {
                 bola.vely = -bola.vely;
+                somLateral.play();
             }
 
         }
