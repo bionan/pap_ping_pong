@@ -30,7 +30,15 @@
 
         var raquete2 = { x: canvas.width - 50, y: 150, alt: 100, larg: 10, vel: 10, pontos: 0 };
 
-        var bola = { x: canvas.width / 2, y: canvas.height / 2, alt: 10, larg: 10, velx: 5, vely: -5 };
+        // gerar um ângulo ao acaso entre 0 rad e 2pi rad
+        var ang = anguloAoAcaso();
+        var vx = velBolaX(ang);
+        var vy = velBolaY(ang);
+
+        console.log(vx);
+        console.log(vy);
+
+        var bola = { x: canvas.width / 2, y: canvas.height / 2, alt: 10, larg: 10, velx: vx, vely: vy };
 
         var r1tecla = { cima: false, baixo: false };
 
@@ -42,7 +50,7 @@
         var somBola = new Audio('bola1.mp3');
         var somLateral = new Audio('bola2.mp3');
 
-        setInterval(jogo, 20); 
+        setInterval(jogo, 20);
 
         function jogo() {
 
@@ -113,7 +121,7 @@
             if (existeColisao(raquete1, bola) || existeColisao(raquete2, bola)) {
                 // alterar a direção da bola
                 bola.velx = -bola.velx;
-                bola.x = bola.x +  2 * bola.velx;
+                bola.x = bola.x + 3 * bola.velx;
                 somBola.play();
             }
         }
@@ -145,6 +153,11 @@
         }
 
         function bolaAoCentro() {
+
+            var ang = anguloAoAcaso();
+            bola.velx = velBolaX(ang);
+            bola.vely = velBolaY(ang);
+
             bola.x = canvas.width / 2;
             bola.y = canvas.height / 2
         }
@@ -179,7 +192,7 @@
             ctx.fill();
 
         }
-        
+
         function teclaPressionada(e) {
 
             switch (e.code) {
@@ -203,7 +216,7 @@
         }
 
         function teclaLiberada(e) {
- 
+
             switch (e.code) {
 
                 case 'ArrowUp':
@@ -217,12 +230,47 @@
                 case 'ArrowDown':
                     r2tecla.baixo = false;
                     break;
- 
+
                 case 'KeyS':
                     r1tecla.baixo = false;
                     break;
 
             }
+        }
+
+        function numAleatorioEntre(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        }
+
+        function anguloAoAcaso() {
+
+            // Gera angulo ao acaso  entre 30 e 55 graus.
+            var aux = Math.floor(Math.random() * 40 + 15);
+
+            // Retorna angulo convertido em radianos
+            return aux * Math.PI / 180;
+        }
+
+        function velBolaX(ang) {
+
+            var vx = 7 * Math.cos(ang);
+
+            if (Math.random() > 0.5) {
+                vx = -vx;
+            }
+
+            return vx;
+        }
+
+        function velBolaY(ang) {
+
+            var vy = 7 * Math.sin(ang);
+
+            if (Math.random() > 0.5) {
+                vy = -vy;
+            }
+
+            return vy;
         }
 
     </script>
