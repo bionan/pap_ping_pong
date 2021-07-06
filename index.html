@@ -220,6 +220,12 @@
 
             bola.x = canvas.width / 2;
             bola.y = canvas.height / 2
+
+            // reposicionar raquetes
+            raquete1 = { x: 50, y: (ALT_CANVAS - ALT_RAQ)/2 , alt: ALT_RAQ, larg: LARG_RAQ, vel: VEL_RAQ, pontos: 0 };
+
+            raquete2 = { x: canvas.width - 50, y: (ALT_CANVAS - ALT_RAQ)/2, alt: ALT_RAQ, larg: LARG_RAQ, vel: VEL_RAQ, pontos: 0 };
+
         }
 
         function desenha() {
