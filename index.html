@@ -47,6 +47,10 @@
 
     <script>
 
+        var timer; // id do temporizador da loop do jogo
+        var contador = 3; // contador da contagem regressiva
+        var em_contagem = false;
+
         // Indicador de som ON/OFF. Inicialmente ON
         var som = true;
         var btnSom = document.getElementById("btnSom");
@@ -81,7 +85,6 @@
         // centradas verticalmente
 
         var raquete1 = { x: 50, y: (ALT_CANVAS - ALT_RAQ)/2 , alt: ALT_RAQ, larg: LARG_RAQ, vel: VEL_RAQ, pontos: 0 };
-
         var raquete2 = { x: canvas.width - 50, y: (ALT_CANVAS - ALT_RAQ)/2, alt: ALT_RAQ, larg: LARG_RAQ, vel: VEL_RAQ, pontos: 0 };
 
         // gerar um ângulo ao acaso entre 0 rad e 2pi rad
@@ -104,7 +107,7 @@
         var somBola = new Audio('bola1.mp3');
         var somLateral = new Audio('bola2.mp3');
 
-        setInterval(jogo, 20);
+        timer = setInterval(jogo, 20);
 
         function jogo() {
 
@@ -112,6 +115,9 @@
             moveBola();
             testaColisao();
             atualizaPontos();
+            if ( em_contagem ) {
+                return;
+            }
             desenha();
 
         }
@@ -196,23 +202,24 @@
 
         function atualizaPontos() {
 
-            if (bola.x <= 0) {
+            if (bola.x < 0) {
                 // ponto para o jogador 2
                 raquete2.pontos = raquete2.pontos + 1;
-
-                // reiniciar jogo
                 bolaAoCentro();
             }
 
-            if (bola.x + bola.larg >= canvas.width) {
+            if (bola.x + bola.larg > canvas.width) {
                 // ponto para o jogador 1
                 raquete1.pontos = raquete1.pontos + 1;
                 bolaAoCentro();
+
             }
 
         }
 
         function bolaAoCentro() {
+
+            clearInterval(timer); // cancelar a loop do jogo
 
             var ang = anguloAoAcaso();
             bola.velx = velBolaX(ang);
@@ -222,10 +229,27 @@
             bola.y = canvas.height / 2
 
             // reposicionar raquetes
-            raquete1 = { x: 50, y: (ALT_CANVAS - ALT_RAQ)/2 , alt: ALT_RAQ, larg: LARG_RAQ, vel: VEL_RAQ, pontos: 0 };
+            raquete1.y = (ALT_CANVAS - ALT_RAQ)/2;
+            raquete2.y = (ALT_CANVAS - ALT_RAQ)/2;
 
-            raquete2 = { x: canvas.width - 50, y: (ALT_CANVAS - ALT_RAQ)/2, alt: ALT_RAQ, larg: LARG_RAQ, vel: VEL_RAQ, pontos: 0 };
+            em_contagem = true;
+            timer = setInterval( contagem_regressiva, 500);
 
+        }
+
+
+        function contagem_regressiva() {
+
+            desenha_contagem();
+
+            contador--;
+
+            if ( contador == -1 ) {
+                em_contagem = false;
+                contador = 3;
+                clearInterval(timer);
+                timer = setInterval(jogo, 20);
+            }
         }
 
         function desenha() {
@@ -239,13 +263,15 @@
             ctx.textAlign = "center";
             ctx.fillText(placar, 300, 30);
 
-            ctx.beginPath();
-            contagem = "3";
-            //ctx.globalAlpha=0.50;\
-            ctx.fillStyle = "white";
-            ctx.font = "96px serif";
-            ctx.textAlign = "center";
-            ctx.fillText(contagem, 300, 200);
+            if ( em_contagem ) {
+                ctx.beginPath();
+                //ctx.globalAlpha=0.50;\
+                ctx.fillStyle = "white";
+                ctx.font = "96px serif";
+                ctx.textAlign = "center";
+                ctx.fillText("" + contador, 300, 200);
+            }
+
 
             // Desenhar a raquete 1
             ctx.beginPath();
@@ -266,6 +292,23 @@
             ctx.fill();
 
         }
+
+
+        function desenha_contagem() {
+
+            // Limpar o canvas (tela do jogo)
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.beginPath();
+            //ctx.globalAlpha=0.50;\
+            ctx.fillStyle = "white";
+            ctx.font = "96px serif";
+            ctx.textAlign = "center";
+            ctx.fillText("" + contador, 300, 200);
+
+
+        }
+
 
         function teclaPressionada(e) {
 
