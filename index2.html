@@ -57,9 +57,10 @@
 
     <script>
 
+
         var timer; // id do temporizador da loop do jogo
         var contador = 3; // contador da contagem regressiva
-        var em_contagem = false;
+        var em_contagem = true;
 
         // Indicador de som ON/OFF. Inicialmente ON
         var som = true;
@@ -120,7 +121,9 @@
         var somBola = new Audio('bola1.mp3');
         var somLateral = new Audio('bola2.mp3');
 
-        timer = setInterval(jogo, 20);
+        document.fonts.load('126px "Tourney"').then(contagem_regressiva);
+        em_contagem = true;
+        timer = setInterval( contagem_regressiva, 500);
 
         function jogo() {
 
