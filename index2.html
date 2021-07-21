@@ -49,7 +49,7 @@
         <section>
             <canvas id="jogo" width="640" height="480"></canvas>
             <div class="botoes">
-                <button id="btnNovoJogo">Novo Jogo</button> <button id="btnSom">Som OFF</button>
+                <button id="btnSom">Som OFF</button>
             </div>
         </section>
     </div>
@@ -113,33 +113,10 @@
 
         reset();
 
-        var btnnovojogo = document.getElementById('btnNovoJogo');
-        btnnovojogo.addEventListener('click', novo_jogo);
-
-
-        function novo_jogo() {
-
-            if ( timer_contagem > 0 || timer_jogo > 0 ) {
-                congela = true;
-                var resposta = confirm("Jogo em andamento. Iniciar novo jogo?")
-                if ( resposta == true) {
-                    clearInterval(timer_contagem);
-                    clearInterval(timer_jogo);
-                    reset();
-                    contador = 3;
-                    em_contagem = true;
-                    timer_contagem = setInterval( contagem_regressiva, 750);
-                }
-                congela = false;
-
-            } else {
-
-                document.fonts.load('126px "Tourney"').then(contagem_regressiva);
+        document.fonts.load('126px "Tourney"').then(contagem_regressiva);
                 em_contagem = true;
                 timer_contagem = setInterval( contagem_regressiva, 750);
-            }
 
-        }
 
         function reset() {
             // No arranque da partida as raquetes deverão estar
